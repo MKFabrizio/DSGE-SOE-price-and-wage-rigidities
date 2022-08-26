@@ -1,21 +1,3 @@
-/*
- * This file implements the mod-file for the Welfare analysis in Ortiz/Montoro (2021):
- * "The Portfolio Channel of Capital Flows". 
- *
- * It computes IRFs and consumption equivalents relative to the natural allocation as described
- * in the paper. For doing so, it uses a solver to find the correct consumption equivalent lambda
- * based on the recursive lifetime welfare measures defined within the model block.
- 
-* THIS MOD-FILE REQUIRES DYNARE 4.5 OR HIGHER
-
-* This implementation follows the code of Johannes Pfeifer. In case you spot mistakes,
-* email: ma.ortizs@up.edu.de
-
-* Key steps:
-* 1: Derive the model 
-* 2: Run model with bad rules, OSR and Ramsey exercises for welfare
-* 3: Find consumption equivalent welfare loss with respect to natural equilibrium
-*/
 
 % Define the model used:
 
