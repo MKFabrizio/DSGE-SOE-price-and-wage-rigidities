@@ -215,3 +215,89 @@ for fig_iter=1:length(var_string)
     grid on
     title(TAYLOR.M_.endo_names_long(strmatch(var_string{fig_iter},TAYLOR.M_.endo_names,'exact'),:))
 end
+
+%% Grafico 7 - welfare, wage rigidities & trade elasticity
+GAMMA_s = 0.1:0.1:0.9
+results_ = zeros(length(GAMMA_s),3);
+for i = 1:1:length(GAMMA_s)
+
+	TTHETAHW = GAMMA_s(i);
+    
+	PHI_G = 1.2;
+    EPSF = 1;
+    EPSH = 1;
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0 -Dngdp=1
+pause(1);
+PHI_G = x_opt_hat(1);
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0  -Dngdp=1
+results_(i,1)= 100*values_all(8);
+
+    PHI_G = 1.2;
+    EPSF = 2;
+    EPSH = 2;
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0  -Dngdp=1
+pause(1);
+PHI_G = x_opt_hat(1);
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0  -Dngdp=1 
+results_(i,2)= 100*values_all(8);
+
+    PHI_G = 1.2;
+    EPSF = 3;
+    EPSH = 3;
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0 -Dngdp=1 
+pause(1);
+PHI_G = x_opt_hat(1);
+save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0 -Dngdp=1
+results_(i,3)= 100*values_all(8);
+
+end; 
+%%
+plot(GAMMA_s, results_) 
+    xlabel('Rigidez de salarios');
+    ylabel('Pérdida de bienestar');
+    legend('\eta = 1','\eta = 2','\eta = 3')
+%%
+
+    TTHETAHWs = 0.1:0.1:0.9
+    TTHETAHs  = 0.1:0.1:0.9
+    %Función de pérdida
+    Ls= -Inf*ones(length(TTHETAHWs),length(TTHETAHs));
+    for ii = 1:length(TTHETAHWs)
+    for jj = 1:length(TTHETAHs)
+        TTHETAHW = TTHETAHWs(ii);
+        TTHETAH = TTHETAHs(jj);
+        
+     PHI_G = 1.2;
+    save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+    dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0 -Dngdp=1 
+    pause(1);
+    PHI_G = x_opt_hat(1);
+    save PARAM_M1 BBETA GGAMMA CCHI EPS EPSH EPSF GGAMMAST MMBAR OOMEGA SSIGMA EPSW RHOA PPSI TTHETAHW RHONST STD_PSI STD_A STD_Z TAUH FXIR GGAMMAC TTHETAH PHI_PIH;
+    dynare nk_wr -DCalvo=1 -Dlogutility=1 -Dosr=1 -Dramsey_policy=0 -Ddixit=0 -DtaylorPPI=0 -DtaylorCPI=0 -Dngdp=1
+    Ls(ii,jj) = 100*values_all(8);
+    end;
+    end;
+
+    %% Grafico 3D perdida de bienestar
+  
+    figure(1);
+    %mesh(TTHETAHs,TTHETAHWs,Ls*10000);
+    surf(TTHETAHs,TTHETAHWs,Ls)
+    xlabel('Rigidez precio');
+    ylabel('Rigidez salario');
+    zlabel('Pérdida de bienestar');
+    FaceColor = 'flat';
+    colormap cool;
+    colorbar
+    figure(2);
+    contourf(TTHETAHs,TTHETAHWs,Ls);
+    xlabel('Rigidez precio');
+    ylabel('Rigidez salario');
+    colormap cool;
+
